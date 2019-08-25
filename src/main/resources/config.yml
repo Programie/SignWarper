@@ -1,0 +1,8 @@
+# Item required to use a warp sign
+use-item: ENDER_PEARL
+
+# Number of items consumed by using a warp sign
+use-cost: 1
+
+# List of all created warps
+warps:

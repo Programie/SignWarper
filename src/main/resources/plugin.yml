@@ -1,0 +1,17 @@
+name: ${project.name}
+version: ${project.version}
+description: '${project.description}'
+author: Programie
+website: ${project.url}
+main: com.selfcoders.signwarper.SignWarper
+permissions:
+  signwarper.*:
+    children:
+      - signwarper.create
+      - signwarper.use
+  signwarper.create:
+    description: 'Allow to create warp signs'
+    default: op
+  signwarper.use:
+    description: 'Allow to use warp signs'
+    default: true
