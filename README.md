@@ -29,7 +29,7 @@ After that create one or more warp signs from which you want to be able to warp 
 * First line: `[Warp]`
 * Second line: The same name as used on the warp target sign
 
-After that you are able to right click with the `use-item` in your hand (defaults to ender pearl). Each warp will cost number of items configured in `use-cost` (defaults to 1).
+After that you are able to right click with the `use-item` in your hand (defaults to ender pearl). Each warp will cost the number of items configured in `use-cost` (defaults to 1).
 
 You can remove the `use-item` option in the [config.yml](src/main/resources/config.yml) or set it to "none" to allow any item to be used without actually using the item (i.e. each warp is free to use).
 
