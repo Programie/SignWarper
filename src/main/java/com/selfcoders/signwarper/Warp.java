@@ -8,6 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 class Warp {
     private final FileConfiguration fileConfiguration;
@@ -43,6 +45,20 @@ class Warp {
         Location location = new Location(world, posX, posY, posZ, (float) yaw, (float) pitch);
 
         return new Warp(fileConfiguration, plugin, warpName, location);
+    }
+
+    static List<Warp> getAll(FileConfiguration fileConfiguration, JavaPlugin plugin) {
+        ConfigurationSection warpsConfig = fileConfiguration.getConfigurationSection("warps");
+
+        List<Warp> warps = new ArrayList<>();
+
+        if (warpsConfig != null) {
+            for (String warpName : warpsConfig.getKeys(false)) {
+                warps.add(getByName(fileConfiguration, plugin, warpName));
+            }
+        }
+
+        return warps;
     }
 
     void save() throws IOException {

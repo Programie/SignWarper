@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.server.PluginEnableEvent;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -21,6 +22,13 @@ public class EventListener implements Listener {
 
     EventListener(SignWarper plugin) {
         this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void onPluginEnable(PluginEnableEvent event) {
+        if (plugin.getConfig().getBoolean("enable-dynmap-markers") && event.getPlugin().getDescription().getName().equals("dynmap")) {
+            plugin.activateMarkers();
+        }
     }
 
     @EventHandler
@@ -66,6 +74,7 @@ public class EventListener implements Listener {
 
             Warp warp = new Warp(plugin.getConfig(), plugin, signData.warpName, player.getLocation());
             warp.save();
+            plugin.updateDynmapMarkers();
 
             event.setLine(0, ChatColor.BLUE + SignData.HEADER_TARGET);
 
@@ -108,6 +117,7 @@ public class EventListener implements Listener {
         }
 
         warp.remove();
+        plugin.updateDynmapMarkers();
 
         player.sendMessage(ChatColor.GREEN + "Warp destroyed." + ChatColor.RESET);
     }

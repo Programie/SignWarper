@@ -4,5 +4,8 @@ use-item: ENDER_PEARL
 # Number of items consumed by using a warp sign
 use-cost: 1
 
+# Uncomment to enable Dynmap marker support
+#enable-dynmap-markers: true
+
 # List of all created warps
 warps:

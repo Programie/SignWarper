@@ -4,6 +4,7 @@ description: '${project.description}'
 author: Programie
 website: ${project.url}
 main: com.selfcoders.signwarper.SignWarper
+softdepend: [dynmap]
 permissions:
   signwarper.*:
     children:
