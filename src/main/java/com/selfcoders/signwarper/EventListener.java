@@ -15,7 +15,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class EventListener implements Listener {
     private final SignWarper plugin;
@@ -207,8 +206,6 @@ public class EventListener implements Listener {
         }
 
         BlockState blockState = block.getState();
-
-        Logger.getLogger("Minecraft").info("block state: " + blockState.toString());
 
         if (!(blockState instanceof Sign)) {
             return null;
