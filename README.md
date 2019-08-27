@@ -6,7 +6,7 @@ A Minecraft Bukkit plugin to warp using signs.
 
 ## Installation
 
-You can get the latest release from [GitLab](hhttps://gitlab.com/Programie/SignWarper/pipelines?scope=tags).
+You can get the latest release from [GitLab](https://gitlab.com/Programie/SignWarper/pipelines?scope=tags).
 
 ## Permissions
 
