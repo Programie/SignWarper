@@ -3,11 +3,10 @@
 A Minecraft Bukkit plugin to warp using signs.
 
 [![pipeline status](https://gitlab.com/Programie/SignWarper/badges/master/pipeline.svg)](https://gitlab.com/Programie/SignWarper/commits/master)
-[![download latest release](https://img.shields.io/badge/download-latest-blue.svg)](https://gitlab.com/Programie/SignWarper/-/jobs/artifacts/master/raw/target/SignWarper.jar?job=release)
 
 ## Installation
 
-You can get the latest release from [GitLab](https://gitlab.com/Programie/SignWarper/-/jobs/artifacts/master/raw/target/SignWarper.jar?job=release).
+You can get the latest release from [GitLab](hhttps://gitlab.com/Programie/SignWarper/pipelines?scope=tags).
 
 ## Permissions
 
