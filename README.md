@@ -35,6 +35,10 @@ You can remove the `use-item` option in the [config.yml](src/main/resources/conf
 
 Removing the `use-item` option in the [config.yml](src/main/resources/config.yml) or setting it to 0 results in the item not being used (i.e. each warp is free to use).
 
+## Dynmap markers
+
+SignWarper supports for showing the warp targets as markers in Dynmap. All you need to do is install the Dynmap plugin and enable the markers using the `dynmap.enable-markers` option in the [config.yml](src/main/resources/config.yml) file.
+
 ## Know issues
 
 A warp won't be removed if the block is removed on which the warp target sign has been placed. The warp will continue to function but it can only be removed by manually editing the [config.yml](src/main/resources/config.yml) and reloading/restarting the server.
