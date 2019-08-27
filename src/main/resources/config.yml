@@ -4,8 +4,24 @@ use-item: ENDER_PEARL
 # Number of items consumed by using a warp sign
 use-cost: 1
 
-# Uncomment to enable Dynmap marker support
-#enable-dynmap-markers: true
+dynmap:
+  # Uncomment to enable Dynmap marker support
+  #enable-markers: true
+
+  # Name of the layer name (i.e. the marker set name)
+  layer-name: Warps
+
+  # Format of the marker labels (%name% is replaced by the warp name)
+  label-format: "%name%"
+
+  # Whether to always show marker labels
+  show-labels: true
+
+  # Icon to use for markers
+  icon: portal
+
+  # Whether to hide the warps layer by default
+  hide-by-default: false
 
 # List of all created warps
 warps:

@@ -1,5 +1,7 @@
 package com.selfcoders.signwarper;
 
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +19,7 @@ public class SignWarper extends JavaPlugin {
 
         pluginManager.registerEvents(new EventListener(this), this);
 
-        if (getConfig().getBoolean("enable-dynmap-markers")) {
+        if (getConfig().getBoolean("dynmap.enable-markers")) {
             Plugin dynmap = pluginManager.getPlugin("dynmap");
             if (dynmap == null) {
                 getLogger().severe("Dynmap markers enabled but Dynmap plugin is not available! Markers will be disabled.");
@@ -46,7 +48,14 @@ public class SignWarper extends JavaPlugin {
             return;
         }
 
-        dynmapMarkers = new DynmapMarkers(markerAPI, getLogger());
+        FileConfiguration config = getConfig();
+        ConfigurationSection dynmapConfig = config.getConfigurationSection("dynmap");
+
+        if (dynmapConfig == null) {
+            dynmapConfig = config.createSection("dynmap");
+        }
+
+        dynmapMarkers = new DynmapMarkers(markerAPI, getLogger(), dynmapConfig);
         updateDynmapMarkers();
     }
 

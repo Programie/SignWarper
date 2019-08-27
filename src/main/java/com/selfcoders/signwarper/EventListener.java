@@ -25,7 +25,7 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPluginEnable(PluginEnableEvent event) {
-        if (plugin.getConfig().getBoolean("enable-dynmap-markers") && event.getPlugin().getDescription().getName().equals("dynmap")) {
+        if (plugin.getConfig().getBoolean("dynmap.enable-markers") && event.getPlugin().getDescription().getName().equals("dynmap")) {
             plugin.activateMarkers();
         }
     }

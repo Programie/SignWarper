@@ -2,6 +2,7 @@ package com.selfcoders.signwarper;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.dynmap.markers.Marker;
 import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerIcon;
@@ -13,17 +14,22 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 class DynmapMarkers {
+    private ConfigurationSection config;
     private MarkerSet markerSet;
     private MarkerIcon icon;
     private Map<String, Marker> markers = new HashMap<>();
 
-    DynmapMarkers(MarkerAPI markerAPI, Logger logger) {
+    DynmapMarkers(MarkerAPI markerAPI, Logger logger, ConfigurationSection config) {
+        this.config = config;
+
         markerSet = markerAPI.getMarkerSet("signwarper");
 
+        String markerSetLabel = config.getString("layer-name", "Warps");
+
         if (markerSet == null) {
-            markerSet = markerAPI.createMarkerSet("signwarper", "Warps", null, false);
+            markerSet = markerAPI.createMarkerSet("signwarper", markerSetLabel, null, false);
         } else {
-            markerSet.setMarkerSetLabel("Warps");
+            markerSet.setMarkerSetLabel(markerSetLabel);
         }
 
         if (markerSet == null) {
@@ -31,7 +37,17 @@ class DynmapMarkers {
             return;
         }
 
-        icon = markerAPI.getMarkerIcon("portal");
+        markerSet.setLabelShow(config.getBoolean("show-labels"));
+        markerSet.setHideByDefault(config.getBoolean("hide-by-default"));
+
+        String iconName = config.getString("icon", "portal");
+        icon = markerAPI.getMarkerIcon(iconName);
+
+        if (icon == null) {
+            logger.severe("Dynmap marker icon '" + iconName + "' is invalid! Falling back to default icon 'portal'.");
+
+            icon = markerAPI.getMarkerIcon("portal");
+        }
     }
 
     void cleanup() {
@@ -60,11 +76,13 @@ class DynmapMarkers {
 
             Marker marker = markers.remove(name);
 
+            String label = config.getString("label-format", "%name%").replaceAll("%name%", name);
+
             if (marker == null) {
-                marker = markerSet.createMarker(name, name, worldName, location.getX(), location.getY(), location.getZ(), icon, false);
+                marker = markerSet.createMarker(name, label, worldName, location.getX(), location.getY(), location.getZ(), icon, false);
             } else {
                 marker.setLocation(worldName, location.getX(), location.getY(), location.getZ());
-                marker.setLabel(name);
+                marker.setLabel(label);
                 marker.setMarkerIcon(icon);
             }
 
