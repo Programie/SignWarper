@@ -17,6 +17,12 @@
     <description>Warp using signs</description>
     <url>https://gitlab.com/Programie/SignWarper</url>
 
+    <scm>
+        <developerConnection>scm:git:ssh://git@gitlab.com/Programie/SignWarper.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+
     <properties>
         <bukkit-api-version>1.14.4</bukkit-api-version>
     </properties>
