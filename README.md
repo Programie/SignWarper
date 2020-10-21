@@ -2,7 +2,16 @@
 
 A Minecraft Bukkit plugin to warp using signs.
 
+<img src="logo.png" alt="Logo" height="300"/>
+
 [![pipeline status](https://gitlab.com/Programie/SignWarper/badges/master/pipeline.svg)](https://gitlab.com/Programie/SignWarper/commits/master)
+[![download latest release](https://img.shields.io/badge/download-latest-blue.svg)](https://gitlab.com/Programie/SignWarper/-/jobs/artifacts/master/raw/target/SignWarper.jar?job=release)
+
+## What is it?
+
+SignWarper allows players to place signs to teleport between them by simply right clicking on them.
+
+By default, teleports have a cost of one ender pearl which must be in the players hand while interacting with the sign, but it can also be disabled in the configuration.
 
 ## Installation
 
