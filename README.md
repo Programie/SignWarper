@@ -2,7 +2,7 @@
 
 A Minecraft Bukkit plugin to warp using signs.
 
-<img src="logo.png" alt="Logo" height="300"/>
+![](screenshot.jpg)
 
 [![pipeline status](https://gitlab.com/Programie/SignWarper/badges/master/pipeline.svg)](https://gitlab.com/Programie/SignWarper/commits/master)
 [![download latest release](https://img.shields.io/badge/download-latest-blue.svg)](https://gitlab.com/Programie/SignWarper/-/jobs/artifacts/master/raw/target/SignWarper.jar?job=release)
