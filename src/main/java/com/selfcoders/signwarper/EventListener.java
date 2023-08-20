@@ -80,12 +80,6 @@ public class EventListener implements Listener {
 
             player.sendMessage(ChatColor.GREEN + "The warp target sign has been placed successfully.");
         }
-
-        Sign signBlock = (Sign) event.getBlock();
-        if (!signBlock.isWaxed()) {
-            signBlock.setWaxed(true);
-            signBlock.update();
-        }
     }
 
     @EventHandler
