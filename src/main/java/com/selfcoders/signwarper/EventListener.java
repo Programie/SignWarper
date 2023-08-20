@@ -6,6 +6,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.WallSign;
+import org.bukkit.block.sign.Side;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,13 +43,13 @@ public class EventListener implements Listener {
 
         if (!player.hasPermission("signwarper.create")) {
             player.sendMessage(ChatColor.RED + "You do not have the required permissions to create warp signs!");
-            event.getBlock().breakNaturally();
+            event.setCancelled(true);
             return;
         }
 
         if (!signData.isValidWarpName()) {
             player.sendMessage(ChatColor.RED + "No warp name defined!\nPlease specify the name for the warp on the second line.");
-            event.getBlock().breakNaturally();
+            event.setCancelled(true);
             return;
         }
 
@@ -57,7 +58,7 @@ public class EventListener implements Listener {
         if (signData.isWarp()) {
             if (existingWarp == null) {
                 player.sendMessage(ChatColor.RED + "The specified warp target does not exist!");
-                event.getBlock().breakNaturally();
+                event.setCancelled(true);
                 return;
             }
 
@@ -67,7 +68,7 @@ public class EventListener implements Listener {
         } else {
             if (existingWarp != null) {
                 player.sendMessage(ChatColor.RED + "A warp target with the same name already exists!");
-                event.getBlock().breakNaturally();
+                event.setCancelled(true);
                 return;
             }
 
@@ -78,6 +79,12 @@ public class EventListener implements Listener {
             event.setLine(0, ChatColor.BLUE + SignData.HEADER_TARGET);
 
             player.sendMessage(ChatColor.GREEN + "The warp target sign has been placed successfully.");
+        }
+
+        Sign signBlock = (Sign) event.getBlock();
+        if (!signBlock.isWaxed()) {
+            signBlock.setWaxed(true);
+            signBlock.update();
         }
     }
 
@@ -91,7 +98,7 @@ public class EventListener implements Listener {
             return;
         }
 
-        SignData signData = new SignData(signBlock.getLines());
+        SignData signData = new SignData(signBlock.getSide(Side.FRONT).getLines());
 
         if (!signData.isWarpTarget()) {
             return;
@@ -139,7 +146,12 @@ public class EventListener implements Listener {
             return;
         }
 
-        SignData signData = new SignData(signBlock.getLines());
+        SignData signData = new SignData(signBlock.getSide(Side.FRONT).getLines());
+
+        if (signData.isWarpSign() && !signBlock.isWaxed()) {
+            signBlock.setWaxed(true);
+            signBlock.update();
+        }
 
         if (!signData.isWarp() || !signData.isValidWarpName()) {
             return;
