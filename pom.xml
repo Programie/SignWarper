@@ -10,7 +10,7 @@
 
     <groupId>com.selfcoders</groupId>
     <artifactId>signwarper</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>SignWarper</name>
