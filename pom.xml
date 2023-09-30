@@ -15,10 +15,10 @@
 
     <name>SignWarper</name>
     <description>Warp using signs</description>
-    <url>https://gitlab.com/Programie/SignWarper</url>
+    <url>https://github.com/Programie/SignWarper</url>
 
     <scm>
-        <developerConnection>scm:git:ssh://git@gitlab.com/Programie/SignWarper.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/Programie/SignWarper.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 

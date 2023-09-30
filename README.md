@@ -4,10 +4,11 @@ A Minecraft Bukkit plugin to warp using signs.
 
 ![](screenshot.jpg)
 
-[![pipeline status](https://gitlab.com/Programie/SignWarper/badges/master/pipeline.svg)](https://gitlab.com/Programie/SignWarper/commits/master)
-[![download from GitLab](https://img.shields.io/badge/download-Releases-blue?logo=gitlab)](https://gitlab.com/Programie/SignWarper/-/releases)
+[![actions status](https://github.com/Programie/SignWarper/actions/workflows/build.yml/badge.svg)](https://github.com/Programie/SignWarper/actions/workflows/build.yml)
+[![download from GitHub](https://img.shields.io/badge/download-Releases-blue?logo=github)](https://github.com/Programie/SignWarper/releases/latest)
 [![download from Modrinth](https://img.shields.io/badge/download-Modrinth-blue?logo=modrinth)](https://modrinth.com/plugin/signwarper)
 [![download from CurseForge](https://img.shields.io/badge/download-CurseForge-blue?logo=curseforge)](https://www.curseforge.com/minecraft/bukkit-plugins/sign-warper)
+[![view on Website](https://img.shields.io/badge/view-Website-blue)](https://selfcoders.com/projects/signwarper)
 
 ## What is it?
 
