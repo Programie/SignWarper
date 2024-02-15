@@ -2,6 +2,7 @@ package com.selfcoders.signwarper;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
@@ -12,12 +13,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class EventListener implements Listener {
+    final static List<BlockFace> BLOCK_FACES = Arrays.asList(BlockFace.UP, BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
+
     private final SignWarper plugin;
 
     EventListener(SignWarper plugin) {
@@ -85,6 +91,15 @@ public class EventListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) throws IOException {
         Block block = event.getBlock();
+        Material blockType = block.getType();
+
+        if (!Tag.ALL_SIGNS.isTagged(blockType)) {
+            if (hasBlockWarpSign(block)) {
+                event.setCancelled(true);
+            }
+
+            return;
+        }
 
         Sign signBlock = getSignFromBlock(block);
 
@@ -202,6 +217,82 @@ public class EventListener implements Listener {
         world.playEffect(targetLocation, Effect.ENDER_SIGNAL, 10);
 
         player.sendMessage(ChatColor.YELLOW + "Warped to " + warp.getName());
+    }
+
+    @EventHandler
+    public void onBlockPistonExtend(BlockPistonExtendEvent event) {
+        if (hasBlockWarpSign(event.getBlocks())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onBlockPistonRetract(BlockPistonRetractEvent event) {
+        if (hasBlockWarpSign(event.getBlocks())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onBlockBurn(BlockBurnEvent event) {
+        if (hasBlockWarpSign(event.getBlock())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onEntityExplode(EntityExplodeEvent event) {
+        if (hasBlockWarpSign(event.blockList())) {
+            event.setCancelled(true);
+        }
+    }
+
+    private boolean hasBlockWarpSign(Block block) {
+        Material blockType = block.getType();
+        if (Tag.ALL_SIGNS.isTagged(blockType)) {
+            Sign signBlock = (Sign) block.getState();
+            if (isWarpSign(signBlock)) {
+                return true;
+            }
+        }
+
+        for (BlockFace blockFace : BLOCK_FACES) {
+            Block faceBlock = block.getRelative(blockFace);
+            Material faceBlockType = faceBlock.getType();
+
+            if (Tag.WALL_SIGNS.isTagged(faceBlockType)) {
+                Sign signBlock = (Sign) faceBlock.getState();
+                BlockFace attachedFace = ((WallSign) signBlock.getBlockData()).getFacing();
+                if (blockFace.equals(attachedFace) && isWarpSign(signBlock)) {
+                    return true;
+                }
+            }
+
+            if (blockFace.equals(BlockFace.UP) && Tag.STANDING_SIGNS.isTagged(faceBlockType)) {
+                Sign signBlock = (Sign) faceBlock.getState();
+                if (isWarpSign(signBlock)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean hasBlockWarpSign(List<Block> blocks) {
+        for (Block block : blocks) {
+            if (hasBlockWarpSign(block)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isWarpSign(Sign signBlock) {
+        SignData signData = new SignData(signBlock.getSide(Side.FRONT).getLines());
+
+        return signData.isWarpSign();
     }
 
     private Sign getSignFromBlock(Block block) {

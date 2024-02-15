@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.0] - 2024-02-15
+
+* Prevent destroying warp signs by explosions, pistons and fire
+
 ## [1.2] - 2023-08-20
 
 * Prevent editing sign with right click implemented with Minecraft 1.20
