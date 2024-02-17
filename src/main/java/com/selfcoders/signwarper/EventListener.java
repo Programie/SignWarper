@@ -1,12 +1,9 @@
 package com.selfcoders.signwarper;
 
+import com.selfcoders.bukkitlibrary.SignUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.type.WallSign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -18,12 +15,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class EventListener implements Listener {
-    final static List<BlockFace> BLOCK_FACES = Arrays.asList(BlockFace.UP, BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
-
     private final SignWarper plugin;
 
     EventListener(SignWarper plugin) {
@@ -101,7 +95,7 @@ public class EventListener implements Listener {
             return;
         }
 
-        Sign signBlock = getSignFromBlock(block);
+        Sign signBlock = SignUtils.getSignFromBlock(block);
 
         if (signBlock == null) {
             return;
@@ -149,7 +143,7 @@ public class EventListener implements Listener {
             return;
         }
 
-        Sign signBlock = getSignFromBlock(block);
+        Sign signBlock = SignUtils.getSignFromBlock(block);
 
         if (signBlock == null) {
             return;
@@ -248,66 +242,16 @@ public class EventListener implements Listener {
     }
 
     private boolean hasBlockWarpSign(Block block) {
-        Material blockType = block.getType();
-        if (Tag.ALL_SIGNS.isTagged(blockType)) {
-            Sign signBlock = (Sign) block.getState();
-            if (isWarpSign(signBlock)) {
-                return true;
-            }
-        }
-
-        for (BlockFace blockFace : BLOCK_FACES) {
-            Block faceBlock = block.getRelative(blockFace);
-            Material faceBlockType = faceBlock.getType();
-
-            if (Tag.WALL_SIGNS.isTagged(faceBlockType)) {
-                Sign signBlock = (Sign) faceBlock.getState();
-                BlockFace attachedFace = ((WallSign) signBlock.getBlockData()).getFacing();
-                if (blockFace.equals(attachedFace) && isWarpSign(signBlock)) {
-                    return true;
-                }
-            }
-
-            if (blockFace.equals(BlockFace.UP) && Tag.STANDING_SIGNS.isTagged(faceBlockType)) {
-                Sign signBlock = (Sign) faceBlock.getState();
-                if (isWarpSign(signBlock)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return SignUtils.hasBlockSign(block, this::isWarpSign);
     }
 
     private boolean hasBlockWarpSign(List<Block> blocks) {
-        for (Block block : blocks) {
-            if (hasBlockWarpSign(block)) {
-                return true;
-            }
-        }
-
-        return false;
+        return SignUtils.hasBlockSign(blocks, this::isWarpSign);
     }
 
     private boolean isWarpSign(Sign signBlock) {
         SignData signData = new SignData(signBlock.getSide(Side.FRONT).getLines());
 
         return signData.isWarpSign();
-    }
-
-    private Sign getSignFromBlock(Block block) {
-        BlockData blockData = block.getBlockData();
-
-        if (!(blockData instanceof WallSign) && !(blockData instanceof org.bukkit.block.data.type.Sign)) {
-            return null;
-        }
-
-        BlockState blockState = block.getState();
-
-        if (!(blockState instanceof Sign)) {
-            return null;
-        }
-
-        return (Sign) blockState;
     }
 }

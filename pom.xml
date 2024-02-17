@@ -50,5 +50,10 @@
             <version>3.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.selfcoders</groupId>
+            <artifactId>bukkit-library</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>
